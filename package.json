@@ -1,0 +1,14 @@
+{
+  "name": "test-api",
+  "version": "1.0.0",
+  "description": "This api accepts an input and a function which generates output then it compares input and output wether they are equal or not. It can also accepts input and output to compare.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NOOR",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
+}
