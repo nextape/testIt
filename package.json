@@ -10,5 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "colors": "^1.1.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nextape/testIt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nextape/testIt/issues"
+  },
+  "homepage": "https://github.com/nextape/testIt#readme"
 }
