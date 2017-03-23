@@ -2,7 +2,7 @@
 * @Author: MD NOORUL NABI ANSARI
 * @Date:   2017-03-21 18:55:25
 * @Last Modified by:   noor
-* @Last Modified time: 2017-03-23 13:28:25
+* @Last Modified time: 2017-03-23 15:15:43
 */
 
 var tester = function(otps){
@@ -76,9 +76,18 @@ tester.prototype.isPureObject = function(obj1){
 
 tester.prototype.getErrorStack = function(){
 	var that = this;
-	return that.errorStack.reverse().reduce(function(memo, key){
-		return memo+" --> "+key;
-	});
+	return that.errorStack.length ? that.errorStack.reverse().reduce(function(memo, key){
+		return memo+"['"+key+"']";
+	},'') : [];
+}
+
+tester.prototype.testIt = function(expectedOP, func){
+	var that = this;
+	if(!expectedOP || typeof func !== 'function'){
+		return new Error("Kindly pass the correct arguments").stack;
+	}
+
+	return that.isEqual(expectedOP, func());
 }
 
 module.exports = tester;

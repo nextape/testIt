@@ -26,9 +26,9 @@
 	        "percentCompleted":0,
 	        "radio":{
 	        	"type":"totalGames",
-	        	"stars":2,
-	        	"total":200,
-	        	"coins":1500
+	        	"stars":20,
+	        	"total":2000,
+	        	"coins":15000
 	        }
 	    }
 	},
