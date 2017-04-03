@@ -2,7 +2,7 @@
 * @Author: MD NOORUL NABI ANSARI
 * @Date:   2017-03-22 14:52:32
 * @Last Modified by:   noor
-* @Last Modified time: 2017-04-03 12:34:13
+* @Last Modified time: 2017-04-03 12:36:18
 */
 var colors = require('colors');
 var output = require('./input.json');
@@ -46,9 +46,11 @@ var obj = {
 	name:"kasim"
 }
 
+console.log(tester.indexOfObj(arrObj, obj));
+
+
 // console.log(arrObj.indexOfObj(obj));
 
-// console.log(tester.indexOfObj(arrObj, obj));
 //  console.log(tester.isEqual({
 // 	age:21,
 // 	name:"kasim"
@@ -67,5 +69,3 @@ var obj = {
 // 	console.log("this is the error trace".bgRed);
 // 	console.log(tester.getErrorStack());
 // }
-
-console.log("1" == 1);
