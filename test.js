@@ -2,7 +2,7 @@
 * @Author: MD NOORUL NABI ANSARI
 * @Date:   2017-03-21 18:55:25
 * @Last Modified by:   noor
-* @Last Modified time: 2017-03-23 15:15:43
+* @Last Modified time: 2017-04-03 12:33:41
 */
 
 var tester = function(otps){
@@ -19,25 +19,31 @@ tester.prototype.isEqual = function(input, output){
 	var keysInput = Object.keys(input);
 	var keysOutput = Object.keys(output);
 	if(keysOutput.length !== keysInput.length){
-		console.log("Expected Keys: ", keysInput);
-		console.log("Output Keys: ", keysOutput);
-		console.log("Conclusion: Keys Different".bgRed);
+		if(that.flagErrObj){
+			console.log("Expected Keys: ", keysInput);
+			console.log("Output Keys: ", keysOutput);
+			console.log("Conclusion: Keys Different".bgRed);
+		}
 		return that.status = false;
 	}else{
 		for(var idx in keysInput){
 			var key = keysInput[idx];
 			if(keysOutput.indexOf(key) < 0){
-				console.log(`input key validation:- ${JSON.stringify(input)}`);
-				console.log(`output key validation:- ${JSON.stringify(output)}`);
-				console.log("Missing Key in Output: ".bgRed, key);
+				if(that.flagErrObj){
+					console.log(`input key validation:- ${JSON.stringify(input)}`);
+					console.log(`output key validation:- ${JSON.stringify(output)}`);
+					console.log("Missing Key in Output: ".bgRed, key);
+				}
 				return that.status = false;
 			}
 
 			if((typeof input[key] === typeof output[key]) && typeof input[key] != "object"){
 				if(input[key] !== output[key]){
-					console.log("input value validation:-".yellow, `${JSON.stringify(input)}`);
-					console.log("output value validation:-".yellow, `${JSON.stringify(output)}`);
-					console.log(`Values Not Equal for key: '${key}'`.bgRed);
+					if(that.flagErrObj){
+						console.log("input value validation:-".yellow, `${JSON.stringify(input)}`);
+						console.log("output value validation:-".yellow, `${JSON.stringify(output)}`);
+						console.log(`Values Not Equal for key: '${key}'`.bgRed);
+					}
 					return that.status = false;
 				}
 			}else{
@@ -89,5 +95,19 @@ tester.prototype.testIt = function(expectedOP, func){
 
 	return that.isEqual(expectedOP, func());
 }
+
+tester.prototype.indexOfObj = function(arr, obj){
+	var that = this;
+	that.flagErrObj = false;
+	for(var key in arr){
+		var iObj = arr[key];
+		that.isEqual(iObj, obj)
+		if(that.status){
+			return key;
+		}
+	}
+	return -1;
+}
+
 
 module.exports = tester;
