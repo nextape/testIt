@@ -2,7 +2,7 @@
 * @Author: MD NOORUL NABI ANSARI
 * @Date:   2017-03-21 18:55:25
 * @Last Modified by:   noor
-* @Last Modified time: 2017-04-03 12:33:41
+* @Last Modified time: 2017-04-12 16:31:40
 */
 
 var tester = function(otps){
@@ -19,42 +19,27 @@ tester.prototype.isEqual = function(input, output){
 	var keysInput = Object.keys(input);
 	var keysOutput = Object.keys(output);
 	if(keysOutput.length !== keysInput.length){
-		if(that.flagErrObj){
-			console.log("Expected Keys: ", keysInput);
-			console.log("Output Keys: ", keysOutput);
-			console.log("Conclusion: Keys Different".bgRed);
-		}
+		printLengthError(input, output, that)
 		return that.status = false;
 	}else{
 		for(var idx in keysInput){
 			var key = keysInput[idx];
 			if(keysOutput.indexOf(key) < 0){
-				if(that.flagErrObj){
-					console.log(`input key validation:- ${JSON.stringify(input)}`);
-					console.log(`output key validation:- ${JSON.stringify(output)}`);
-					console.log("Missing Key in Output: ".bgRed, key);
-				}
+				printObjectError(input, output, key, that)
 				return that.status = false;
 			}
 
 			if((typeof input[key] === typeof output[key]) && typeof input[key] != "object"){
 				if(input[key] !== output[key]){
-					if(that.flagErrObj){
-						console.log("input value validation:-".yellow, `${JSON.stringify(input)}`);
-						console.log("output value validation:-".yellow, `${JSON.stringify(output)}`);
-						console.log(`Values Not Equal for key: '${key}'`.bgRed);
-					}
+					printObjectError(input, output, key, that)
+					that.errorStack.push(key);
 					return that.status = false;
 				}
 			}else{
 				if(input[key] == output[key]){
 					// continue;
 				}else if(!that.typeCheck(input[key], output[key]) || !that.isEqual(input[key], output[key])){
-					if(that.flagErrObj){
-						console.log("********** The above error(s) is in these inner Objects **********".bgBlue);
-						console.log("input inner:-".yellow, `${key}:${JSON.stringify(input[key])}`);
-						console.log("output inner:-".yellow, `${key}:${JSON.stringify(output[key])}`);
-					}
+					printInnerObjectError(input, output, key, that)
 					that.errorStack.push(key);
 					return that.status = false;
 				}
@@ -64,6 +49,29 @@ tester.prototype.isEqual = function(input, output){
 	return that.status = true;
 }
 
+function printLengthError(input, output, that){
+	if(that.flagErrObj){
+		console.log(`input key validation:- ${JSON.stringify(input)}`);
+		console.log(`output key validation:- ${JSON.stringify(output)}`);
+		console.log("Missing Key in Output: ".bgRed, key);
+	}
+}
+
+function printObjectError(input, output, key, that){
+	if(that.flagErrObj){
+		console.log("input value validation:-".yellow, `${JSON.stringify(input)}`);
+		console.log("output value validation:-".yellow, `${JSON.stringify(output)}`);
+		console.log(`Values Not Equal for key: '${key}'`.bgRed);
+	}
+}
+
+function printInnerObjectError(input, output, key, that){
+	if(that.flagErrObj){
+		console.log("********** The above error(s) is in these inner Objects **********".bgBlue);
+		console.log("input inner:-".yellow, `${key}:${JSON.stringify(input[key])}`);
+		console.log("output inner:-".yellow, `${key}:${JSON.stringify(output[key])}`);
+	}
+}
 
 tester.prototype.typeCheck = function(obj1, obj2){
 	var that = this;
